@@ -30,6 +30,7 @@ namespace openpose_ros {
             ros::Publisher openpose_human_list_pub_;
             image_transport::ImageTransport it_;
             image_transport::Subscriber image_sub_;
+            image_transport::Publisher  result_image_pub_;
             cv_bridge::CvImagePtr cv_img_ptr_;
             std_msgs::Header image_header_;
 
