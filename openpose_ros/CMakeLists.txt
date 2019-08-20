@@ -21,7 +21,7 @@ find_package(OpenCV REQUIRED)
 find_package(GFlags)
 find_package(Glog)
 find_package(OpenPose REQUIRED)
-find_package(Caffe REQUIRED HINTS /home/yunrongli/dev/caffe/build/install)
+find_package(Caffe REQUIRED)
 
 catkin_package(
    INCLUDE_DIRS include
