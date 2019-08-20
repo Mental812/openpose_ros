@@ -7,11 +7,13 @@ OpenPoseROSIO::OpenPoseROSIO(OpenPose &openPose): nh_("/openpose_ros_node"), it_
     // Subscribe to input video feed and publish human lists as output
     std::string image_topic;
     std::string output_topic;
+    std::string output_image_topic;
     std::string input_image_transport_type;
 
     nh_.param("image_topic", image_topic, std::string("/camera/image_raw"));
     nh_.param("input_image_transport_type", input_image_transport_type, std::string("raw"));
     nh_.param("output_topic", output_topic, std::string("/openpose_ros/human_list"));
+    nh_.param("output_image_topic", output_image_topic, std::string("/openpose_ros/result_image_raw"));
     nh_.param("display_output", display_output_flag_, true);
     nh_.param("print_keypoints", print_keypoints_flag_, false);
     nh_.param("save_original_video", save_original_video_flag_, false);
@@ -21,6 +23,7 @@ OpenPoseROSIO::OpenPoseROSIO(OpenPose &openPose): nh_("/openpose_ros_node"), it_
     nh_.param("video_fps", video_fps_, 10);
 
     image_sub_ = it_.subscribe(image_topic, 1, &OpenPoseROSIO::processImage, this, image_transport::TransportHints(input_image_transport_type));
+    result_image_pub_ = it_.advertise(output_image_topic, 1);
     openpose_human_list_pub_ = nh_.advertise<openpose_ros_msgs::OpenPoseHumanList>(output_topic, 10);
     cv_img_ptr_ = nullptr;
     openpose_ = &openPose;
@@ -374,6 +377,10 @@ void OpenPoseROSIO::publish(const std::shared_ptr<std::vector<std::shared_ptr<op
 
         openpose_human_list_pub_.publish(human_list_msg);
 
+        sensor_msgs::ImagePtr result_image_msg = cv_bridge::CvImage(std_msgs::Header(), sensor_msgs::image_encodings::BGR8,
+                                                                  datumsPtr->at(0)->cvOutputData).toImageMsg();
+
+        result_image_pub_.publish(result_image_msg);
     }
     else
         op::log("Nullptr or empty datumsPtr found.", op::Priority::High, __LINE__, __FUNCTION__, __FILE__);
