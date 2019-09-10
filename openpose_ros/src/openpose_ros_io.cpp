@@ -21,6 +21,7 @@ OpenPoseROSIO::OpenPoseROSIO(OpenPose &openPose): nh_("/openpose_ros_node"), it_
     nh_.param("video_fps", video_fps_, 10);
 
     image_sub_ = it_.subscribe(image_topic, 1, &OpenPoseROSIO::processImage, this, image_transport::TransportHints(input_image_transport_type));
+    result_image_pub_ = it_.advertise("/openpose_ros/result_image_raw", 1);
     openpose_human_list_pub_ = nh_.advertise<openpose_ros_msgs::OpenPoseHumanList>(output_topic, 10);
     cv_img_ptr_ = nullptr;
     openpose_ = &openPose;
@@ -369,6 +370,9 @@ void OpenPoseROSIO::publish(const std::shared_ptr<std::vector<std::shared_ptr<op
 
             human_list.at(person) = human;
         }
+
+        sensor_msgs::ImagePtr image_msg = cv_bridge::CvImage(std_msgs::Header(), "bgr8", datumsPtr->at(0)->cvOutputData).toImageMsg();
+        result_image_pub_.publish(image_msg);
 
         human_list_msg.human_list = human_list;
 
