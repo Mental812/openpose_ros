@@ -98,13 +98,13 @@ DEFINE_string(face_net_resolution,      "368x368",      "Multiples of 16 and squ
                                                         " detector. 320x320 usually works fine while giving a substantial speed up when multiple"
                                                         " faces on the image.");
 // OpenPose Hand
-DEFINE_bool(hand,                       false,          "Enables hand keypoint detection. It will share some parameters from the body pose, e.g."
+DEFINE_bool(hand,                       true,          "Enables hand keypoint detection. It will share some parameters from the body pose, e.g."
                                                         " `model_folder`. Analogously to `--face`, it will also slow down the performance, increase"
                                                         " the required GPU memory and its speed depends on the number of people.");
 DEFINE_int32(hand_detector,             0,              "Kind of hand rectangle detector. Analogous to `--face_detector`.");
-DEFINE_string(hand_net_resolution,      "368x368",      "Multiples of 16 and squared. Analogous to `net_resolution` but applied to the hand keypoint"
+DEFINE_string(hand_net_resolution,      "192x192",      "Multiples of 16 and squared. Analogous to `net_resolution` but applied to the hand keypoint"
                                                         " detector.");
-DEFINE_int32(hand_scale_number,         1,              "Analogous to `scale_number` but applied to the hand keypoint detector. Our best results"
+DEFINE_int32(hand_scale_number,         2,              "Analogous to `scale_number` but applied to the hand keypoint detector. Our best results"
                                                         " were found with `hand_scale_number` = 6 and `hand_scale_range` = 0.4.");
 DEFINE_double(hand_scale_range,         0.4,            "Analogous purpose than `scale_gap` but applied to the hand keypoint detector. Total range"
                                                         " between smallest and biggest scale. The scales will be centered in ratio 1. E.g., if"
