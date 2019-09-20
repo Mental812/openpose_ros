@@ -14,7 +14,7 @@ DEFINE_bool(disable_multi_thread,       false,          "It would slightly reduc
 DEFINE_int32(profile_speed,             1000,           "If PROFILER_ENABLED was set in CMake or Makefile.config files, OpenPose will show some"
                                                         " runtime statistics at this frame number.");
 // OpenPose
-DEFINE_string(model_folder,             "/home/gs30/dev/lib/openpose/models",      "Folder path (absolute or relative) where the models (pose, face, ...) are located.");
+DEFINE_string(model_folder,             "/home/nvidia/dev/lib/openpose/models",      "Folder path (absolute or relative) where the models (pose, face, ...) are located.");
 DEFINE_string(prototxt_path,            "",             "The combination `--model_folder` + `--prototxt_path` represents the whole path to the"
                                                         " prototxt file. If empty, it will use the default OpenPose ProtoTxt file.");
 DEFINE_string(caffemodel_path,          "",             "The combination `--model_folder` + `--caffemodel_path` represents the whole path to the"
@@ -48,7 +48,7 @@ DEFINE_int32(body,                      1,              "Select 0 to disable bod
                                                         " keypoint detection, custom hand detector, etc.), 1 (default) for body keypoint"
                                                         " estimation, and 2 to disable its internal body pose estimation network but still"
                                                         " still run the greedy association parsing algorithm");
-DEFINE_string(model_pose,               "BODY_25",      "Model to be used. E.g., `COCO` (18 keypoints), `MPI` (15 keypoints, ~10% faster), "
+DEFINE_string(model_pose,               "COCO",      "Model to be used. E.g., `COCO` (18 keypoints), `MPI` (15 keypoints, ~10% faster), "
                                                         "`MPI_4_layers` (15 keypoints, even faster but less accurate).");
 DEFINE_string(net_resolution,           "128x96",       "Multiples of 16. If it is increased, the accuracy potentially increases. If it is"
                                                         " decreased, the speed increases. For maximum speed-accuracy balance, it should keep the"
@@ -98,11 +98,11 @@ DEFINE_string(face_net_resolution,      "368x368",      "Multiples of 16 and squ
                                                         " detector. 320x320 usually works fine while giving a substantial speed up when multiple"
                                                         " faces on the image.");
 // OpenPose Hand
-DEFINE_bool(hand,                       false,          "Enables hand keypoint detection. It will share some parameters from the body pose, e.g."
+DEFINE_bool(hand,                       true,          "Enables hand keypoint detection. It will share some parameters from the body pose, e.g."
                                                         " `model_folder`. Analogously to `--face`, it will also slow down the performance, increase"
                                                         " the required GPU memory and its speed depends on the number of people.");
 DEFINE_int32(hand_detector,             0,              "Kind of hand rectangle detector. Analogous to `--face_detector`.");
-DEFINE_string(hand_net_resolution,      "368x368",      "Multiples of 16 and squared. Analogous to `net_resolution` but applied to the hand keypoint"
+DEFINE_string(hand_net_resolution,      "192x192",      "Multiples of 16 and squared. Analogous to `net_resolution` but applied to the hand keypoint"
                                                         " detector.");
 DEFINE_int32(hand_scale_number,         1,              "Analogous to `scale_number` but applied to the hand keypoint detector. Our best results"
                                                         " were found with `hand_scale_number` = 6 and `hand_scale_range` = 0.4.");
